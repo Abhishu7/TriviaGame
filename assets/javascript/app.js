@@ -1,4 +1,4 @@
-var triviaquestions = [{
+var triviaQuestions = [{
     question: "Where in the world would you find Chelsea FC",
     answerList: [" Paris", " London", " Berlin", " Amsterdam"],
     correctAnswer: " London",
@@ -30,5 +30,4 @@ var triviaquestions = [{
     question: "Where will the next FIFA World Cup be held?",
     answerList: [" USA/Canda/Mexico", " Russia", " Qatar", " Japan"],
     correctAnswer: " Qatar",
-}
-]
+}]
