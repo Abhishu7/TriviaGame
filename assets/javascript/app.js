@@ -1,138 +1,140 @@
 var triviaQuestions = [{
     question: "Where in the world would you find Chelsea FC",
-    answerList: {
-        a: "Paris",
-        b: "London",
-        c: "Berlin",
-        d: "Amsterdam"},
-    correctAnswer: "b",
-  }, {
+    answerList: ["Paris", "London", "Berlin", "Amsterdam"],
+    correctAnswer: "London",
+}, {
     question: "What team does Cristiano Ronaldo play for?",
-    answerList: {
-        a: "FC Barcelona",
-        b: "Manchester United",
-        c: "Real Madrid",
-        d: "Juventus"},
-    correctAnswer: "d",
-  }, {
+    answerList: ["FC Barcelona", "Manchester United", "Real Madrid", "Juventus"],
+    correctAnswer: "Juventus",
+}, {
     question: "Which player is notorious for the 'Hand of God' goal?",
-    answerList: {
-        a: "Diego Maradona",
-        b: "Pele",
-        c: "Lionel Messi",
-        d: "Ronaldinho"},
-    correctAnswer: "a",
-  }, {
+    answerList: ["Diego Maradona", "Pele", "Lionel Messi", "Ronaldinho"],
+    correctAnswer: "Diego Maradona",
+}, {
     question: "Which league is the highest professional level of futbol in France?",
-    answerList: {
-        a: "Bundesliga",
-        b: "La Liga",
-        c: "Ligue 1",
-        d: "Liga NOS"},
-    correctAnswer: "c",
-  }, {
+    answerList: ["Bundesliga", "La Liga", "Ligue 1", "Liga NOS"],
+    correctAnswer: "Ligue 1",
+}, {
     question: "Which country has never won the FIFA World Cup?",
-    answerList: {
-        a: "Netherlands",
-        b: "Germany",
-        c: "Uruguay",
-        d: "England"},
-    correctAnswer: "a",
-  }, {
+    answerList: ["Netherlands", "Germany", "Uruguay", "England"],
+    correctAnswer: "Netherlands",
+}, {
     question: "Which country has won the most FIFA World Cups?",
-    answerList: {
-        a: "Argentina",
-        b: "Brazil",
-        c: "France",
-        d: "Germany"},
-    correctAnswer: "b",
-  }, {
+    answerList: ["Argentina", "Brazil", "France", "Germany"],
+    correctAnswer: "Brazil",
+}, {
     question: "How many teams participate in the FIFA World Cup?",
-    answerList: {
-        a: "16",
-        b: "48",
-        c: "1",
-        d: "32"},
-    correctAnswer: "d",
-  }, {
+    answerList: ["16", "48", "1", "32"],
+    correctAnswer: "32",
+}, {
     question: "Where will the next FIFA World Cup be held?",
-    answerList: {
-        a: "USA/Canda/Mexico",
-        b: "Russia",
-        c: "Qatar",
-        d: "Japan/South Korea"},
+    answerList: ["USA/Canda/Mexico", "Russia", "Qatar", "Japan/South Korea"],
     correctAnswer: "c",
-  }]
+}]
 
-  var quizContainer = document.getElementById('quiz');
-  var resultsContainer = document.getElementById('results');
-  var startButton = document.getElementById('start');
-  var submitButton = document.getElementById('submit');
-  
-  startButton.addEventListener('click', start);
-  submitButton.addEventListener('click', showResults);
+$("#start").on('click', function () {
+    triviaGame.start();
+})
+$(document).on('click', '#submit', function () {
+    triviaGame.over();
+})
+var triviaGame = {
+    right: 0,
+    wrong: 0,
+    counter: 60,
 
-  function showResults(){
-    var answerContainers = quizContainer.querySelectorAll('.answers');
+    start: function () {
+        $("#start").hide();
+        $("#submit").show();
 
-  // keep track of user's answers
-  var numCorrect = 0;
-  var inCorrect
-
-  triviaQuestions.forEach( (currentQuestion, questionNumber) => {
-
-   var answerContainer = answerContainers[questionNumber];
-    var selector = 'input[name=question'+questionNumber+']:checked';
-    var userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-    if(userAnswer===currentQuestion.correctAnswer){
-      numCorrect++;
-
-      answerContainers[questionNumber].style.color = 'darkgreen';
-    }
-    else{ 
-      answerContainers[questionNumber].style.color = 'red';
-    }
-  });
-
-  resultsContainer.innerHTML = numCorrect + ' out of ' + triviaQuestions.length;
-}
-
-
-
-function buildQuiz(){
-    submitButton.style.display="block";
-    // we'll need a place to store the HTML output
-    var output = [];
-  
-    // for each question...
-    triviaQuestions.forEach(
-      (currentQuestion, questionNumber) => {
-  
-        // we'll want to store the list of answer choices
-        var answers = [];
-  
-        // and for each available answer...
-        for(letter in currentQuestion.answerList){
-  
-          // ...add an HTML radio button
-          answers.push(
-            `<label>
-              <input type="radio" name="question${questionNumber}" value="${letter}">
-              ${letter} :
-              ${currentQuestion.answerList[letter]}
-            </label>`
-          );
+        timer = setInterval(triviaGame.countdown, 1000);
+        $("#display").prepend('<h2>Time Remaining: <span id="counter">60</span> seconds </h2>');
+        for (var i = 0; i < triviaQuestions.length; i++) {
+            $("#display").append('<h4>' + triviaQuestions[i].question + '</h4>')
+            for (var j = 0; j < triviaQuestions[i].answerList.length; j++) {
+                $("#display").append("<br><input type='radio' name='question " + i + "' value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j])
+            }
         }
-  
-        // add this question and its answers to the output
-        output.push(
-          `<div class="question"> ${currentQuestion.question} </div>
-          <div class="answers"> ${answers.join('')} </div>`
-        );
-      }
-    );
-  
-    // finally combine our output list into one string of HTML and put it on the page
-    quizContainer.innerHTML = output.join('');
-  }
+        $("#display").append('<br><br><a class="btn btn-primary" href="#" id="submit" role="button">Submit</a>')
+    },
+
+    countdown: function () {
+        triviaGame.counter--;
+        $("#counter").html(triviaGame.counter);
+        if (triviaGame.counter == 0) {
+            console.log("Out of Time")
+            triviaGame.over();
+        }
+    },
+    over: function () {
+        $.each($("input[name = 'question 0']:checked"), function () {
+            if ($(this).val() == triviaQuestions[0].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 1']:checked"), function () {
+            if ($(this).val() == triviaQuestions[1].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 2']:checked"), function () {
+            if ($(this).val() == triviaQuestions[2].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 3']:checked"), function () {
+            if ($(this).val() == triviaQuestions[3].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 4']:checked"), function () {
+            if ($(this).val() == triviaQuestions[4].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 5']:checked"), function () {
+            if ($(this).val() == triviaQuestions[5].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 6']:checked"), function () {
+            if ($(this).val() == triviaQuestions[6].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+        $.each($("input[name = 'question 7']:checked"), function () {
+            if ($(this).val() == triviaQuestions[7].correctAnswer) {
+                triviaGame.right++;
+            } else {
+                triviaGame.wrong++;
+            }
+        });
+
+        this.result()
+    },
+
+
+    result: function () {
+        clearInterval(timer);
+        $("#display").html("<h1>Time's Up</h1>");
+        $("#display").append("<h3>Correct: " + this.right + "</h3>");
+        $("#display").append("<h3>Incorrect: " + this.wrong + "</h3>");
+        $("#display").append("<h4>Blank: " + (triviaQuestions.length - (this.wrong + this.right)) + "</h4>");
+    }
+
+
+}
