@@ -50,19 +50,18 @@ var triviaGame = {
         timer = setInterval(triviaGame.countdown, 1000);
         $("#quiz").prepend('<h2>Time: <span id="counter">60</span> seconds </h2>');
         for (var i = 0; i < triviaQuestions.length; i++) {
-            $("#quiz").append('<h4>' + triviaQuestions[i].question + '</h4>')
+            $("#quiz").append('<h5>' + triviaQuestions[i].question + '</h5>')
             for (var j = 0; j < triviaQuestions[i].answerList.length; j++) {
-                $("#quiz").append("<br><input type='radio' name='question " + i + "' value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j])
+                $("#quiz").append("<input type='radio' name='question " + i + "' value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j])
             }
         }
-        $("#quiz").append('<br><br><a class="btn btn-primary" href="#" id="submit" role="button">Submit</a>')
+        $("#quiz").append('<br><a class="btn btn-primary" href="#" id="submit" role="button">Submit</a>')
     },
 
     countdown: function () {
         triviaGame.counter--;
         $("#counter").html(triviaGame.counter);
         if (triviaGame.counter == 0) {
-            console.log("Out of Time")
             triviaGame.over();
         }
     },
