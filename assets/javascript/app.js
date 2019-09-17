@@ -29,7 +29,7 @@ var triviaQuestions = [{
 }, {
     question: "Where will the next FIFA World Cup be held?",
     answerList: ["USA/Canda/Mexico", "Russia", "Qatar", "Japan/South Korea"],
-    correctAnswer: "c",
+    correctAnswer: "Qatar",
 }]
 
 $("#start").on('click', function () {
@@ -48,7 +48,7 @@ var triviaGame = {
         $("#submit").show();
 
         timer = setInterval(triviaGame.countdown, 1000);
-        $("#display").prepend('<h2>Time Remaining: <span id="counter">60</span> seconds </h2>');
+        $("#display").prepend('<h2>Time: <span id="counter">60</span> seconds </h2>');
         for (var i = 0; i < triviaQuestions.length; i++) {
             $("#display").append('<h4>' + triviaQuestions[i].question + '</h4>')
             for (var j = 0; j < triviaQuestions[i].answerList.length; j++) {
