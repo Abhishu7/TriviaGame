@@ -1,7 +1,11 @@
-#flag, #instruct{
+.jumbotron{
     text-align: center;
-    color: magenta;
+    color: darkmagenta;
 }
 body{
-    background-color: skyblue
+    background-color: rgb(188, 229, 245)
+}
+
+#submit{
+    display: none;
 }
