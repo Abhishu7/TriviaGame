@@ -98,12 +98,7 @@ var triviaQuestions = [{
   resultsContainer.innerHTML = numCorrect + ' out of ' + triviaQuestions.length;
 }
 
-function start(){
-    buildQuiz();
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    setTimeout(function(){showResults()}, 100000);
 
-}
 
 function buildQuiz(){
     submitButton.style.display="block";
