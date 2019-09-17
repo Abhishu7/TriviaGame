@@ -134,6 +134,4 @@ var triviaGame = {
         $("#quiz").append("<h3>Incorrect: " + this.wrong + "</h3>");
         $("#quiz").append("<h4>Blank: " + (triviaQuestions.length - (this.wrong + this.right)) + "</h4>");
     }
-
-
 }
