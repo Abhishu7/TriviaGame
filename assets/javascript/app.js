@@ -48,14 +48,14 @@ var triviaGame = {
         $("#submit").show();
 
         timer = setInterval(triviaGame.countdown, 1000);
-        $("#display").prepend('<h2>Time: <span id="counter">60</span> seconds </h2>');
+        $("#quiz").prepend('<h2>Time: <span id="counter">60</span> seconds </h2>');
         for (var i = 0; i < triviaQuestions.length; i++) {
-            $("#display").append('<h4>' + triviaQuestions[i].question + '</h4>')
+            $("#quiz").append('<h4>' + triviaQuestions[i].question + '</h4>')
             for (var j = 0; j < triviaQuestions[i].answerList.length; j++) {
-                $("#display").append("<br><input type='radio' name='question " + i + "' value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j])
+                $("#quiz").append("<br><input type='radio' name='question " + i + "' value='" + triviaQuestions[i].answerList[j] + "'>" + triviaQuestions[i].answerList[j])
             }
         }
-        $("#display").append('<br><br><a class="btn btn-primary" href="#" id="submit" role="button">Submit</a>')
+        $("#quiz").append('<br><br><a class="btn btn-primary" href="#" id="submit" role="button">Submit</a>')
     },
 
     countdown: function () {
@@ -130,10 +130,10 @@ var triviaGame = {
 
     result: function () {
         clearInterval(timer);
-        $("#display").html("<h1>Time's Up</h1>");
-        $("#display").append("<h3>Correct: " + this.right + "</h3>");
-        $("#display").append("<h3>Incorrect: " + this.wrong + "</h3>");
-        $("#display").append("<h4>Blank: " + (triviaQuestions.length - (this.wrong + this.right)) + "</h4>");
+        $("#quiz").html("<h1>Time's Up</h1>");
+        $("#quiz").append("<h3>Correct: " + this.right + "</h3>");
+        $("#quiz").append("<h3>Incorrect: " + this.wrong + "</h3>");
+        $("#quiz").append("<h4>Blank: " + (triviaQuestions.length - (this.wrong + this.right)) + "</h4>");
     }
 
 
