@@ -1,5 +1,5 @@
 var triviaQuestions = [{
-    question: "Where in the world would you find Chelsea FC",
+    question: "Where in the world would you find Chelsea FC?",
     answerList: ["Paris", "London", "Berlin", "Amsterdam"],
     correctAnswer: "London",
 }, {
