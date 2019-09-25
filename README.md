@@ -12,3 +12,5 @@ Visual Studio Code
 
 # Authors 
 Abhishu Mukherjee
+
+https://abhishu7.github.io/TriviaGame/
